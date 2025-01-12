@@ -1,9 +1,9 @@
-// 最初に実行される部分なので、単純なconsole.logで確認
+// Simple console.log to verify script execution
 console.log('Content script loaded');
 
 const EXTENSION_NAME = 'NanoKVM Capture';
 
-// デバッグ用のログ出力
+// Debug logging utility
 function debugLog(message: string) {
   try {
     console.log(`[${EXTENSION_NAME}] ${message}`);
@@ -12,10 +12,10 @@ function debugLog(message: string) {
   }
 }
 
-// 初期化済みフラグ
+// Flag to prevent multiple initializations
 let isInitialized = false;
 
-// 条件をチェックして初期化
+// Check conditions and initialize if met
 function checkConditionsAndInitialize() {
   if (isInitialized) return;
 
@@ -43,7 +43,7 @@ function startObserving() {
   debugLog('Starting observation...');
   debugLog(`Document readyState: ${document.readyState}`);
 
-  // DOM変更の監視を設定
+  // Set up mutation observer for DOM changes
   const observer = new MutationObserver((mutations) => {
     if (isInitialized) {
       debugLog('Already initialized, disconnecting observer');
@@ -54,14 +54,14 @@ function startObserving() {
     checkConditionsAndInitialize();
   });
 
-  // 監視を開始
+  // Start observing document changes
   observer.observe(document.documentElement, {
     childList: true,
     subtree: true,
     characterData: true
   });
 
-  // 初期チェック
+  // Initial check for conditions
   checkConditionsAndInitialize();
 }
 
@@ -71,18 +71,18 @@ function initializeExtension() {
   debugLog('Initializing extension...');
   isInitialized = true;
   
-  // ここに拡張機能の主要な処理を記述します
+  // Place main extension functionality here
   debugLog('Extension initialized successfully');
 }
 
-// メイン処理
+// Main entry point
 function main() {
   debugLog(`Extension loaded at ${window.location.href}`);
   debugLog('Waiting 5 seconds before starting...');
   setTimeout(startObserving, 5000);
 }
 
-// スクリプトの実行開始
+// Start script execution with error handling
 try {
   main();
 } catch (e) {
