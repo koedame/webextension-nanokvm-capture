@@ -2,7 +2,7 @@
   "manifest_version": 3,
   "name": "NanoKVM Capture",
   "version": "1.0.0",
-  "description": "Chrome extension for capturing NanoKVM interface",
+  "description": "A Chrome extension that adds screenshot and video recording capabilities to NanoKVM.",
   "icons": {
     "16": "icons/icon16.png",
     "32": "icons/icon32.png",

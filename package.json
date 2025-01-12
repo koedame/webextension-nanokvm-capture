@@ -1,7 +1,7 @@
 {
   "name": "webextension-nanokvm-capture",
   "version": "1.0.0",
-  "description": "Chrome extension for capturing NanoKVM interface",
+  "description": "A Chrome extension that adds screenshot and video recording capabilities to NanoKVM.",
   "type": "module",
   "scripts": {
     "dev": "bun run scripts/watch.ts",
