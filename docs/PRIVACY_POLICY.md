@@ -1,34 +1,94 @@
-# Privacy Policy
+# Privacy Policy for NanoKVM Capture Chrome Extension
 
-NanoKVM Capture (hereinafter referred to as "this extension") respects user privacy and handles data in accordance with the following policy.
+To facilitate the compliance of your extension with the Chrome Web Store Developer Program Policies, you are required to provide the information listed below. The information provided in this form will be shared with the Chrome Web Store team. Please ensure that the information provided is accurate, as it will improve the review time of your extension and decrease the risk of this version being rejected.
 
-## Information We Collect
 
-This extension only collects the following information:
+## Single purpose
 
-- Screenshots of the NanoKVM interface (only when explicitly captured by the user)
-- Screen recordings of the NanoKVM interface (only when recording is explicitly initiated by the user)
+An extension must have a single purpose that is narrow and easy-to-understand.
 
-## How We Use Your Data
+### Single purpose description
 
-- All collected data (screenshots and recordings) is stored only in your local environment
-- Collected data is never transmitted to external servers
-- Collected data is retained in your local environment unless explicitly deleted by you
+```
+NanoKVM Capture is a Chrome extension designed specifically to enhance NanoKVM's functionality by adding screenshot and video recording capabilities. This extension allows users to capture and record their NanoKVM remote desktop sessions directly from their browser, providing essential documentation and troubleshooting capabilities for system administrators and users working with NanoKVM-managed devices.
+```
 
-## Data Sharing
+## Permission justification
 
-This extension does not share any collected data with third parties.
+A permission is either one of a list of known strings, such as "activeTab", or a match pattern giving access to one or more hosts.
+Remove any permission that is not needed to fulfill the single purpose of your extension. Requesting an unnecessary permission will result in this version being rejected.
 
-## Security
+### scripting justification
 
-This extension handles all collected data only in your local environment and implements appropriate security measures.
+```
+The scripting permission is essential for implementing screenshot and video recording capabilities. This permission is required to execute JavaScript on web pages to enable the capture functionality.
+```
 
-## Changes to This Privacy Policy
+### Host permission justification
 
-This privacy policy may be updated as needed. We will notify you of any significant changes through extension updates.
+```
+Host permissions are required to access the NanoKVM control interface. This permission is necessary to enable capture functionality on the NanoKVM web interface.
+```
 
-## Contact Us
+### Are you using remote code?
 
-If you have any questions or concerns about this privacy policy, please contact us through the GitHub Issues page.
+[x] No, I am not using Remote code
+[] Yes, I am using Remote code
 
-Last Updated: January 12, 2024 
+
+### Justification
+
+```
+This extension executes all code locally and does not use any remote code. All functionality is provided by code contained within the extension itself.
+```
+
+## Data usage
+
+The content of this form will be displayed publicly on the item detail page. By publishing your item, you are certifying that these disclosures reflect the most up-to-date content of your privacy policy.
+
+### What user data do you plan to collect from users now or in the future? (See FAQ for more information)
+
+[] Personally identifiable information
+For example: name, address, email address, age, or identification number
+
+[] Health information
+For example: heart rate data, medical history, symptoms, diagnoses, or procedures
+
+[] Financial and payment information
+For example: transactions, credit card numbers, credit ratings, financial statements, or payment history
+
+[] Authentication information
+For example: passwords, credentials, security question, or personal identification number (PIN)
+
+[] Personal communications
+For example: emails, texts, or chat messages
+
+[] Location
+For example: region, IP address, GPS coordinates, or information about things near the user's device
+
+[] Web history
+The list of web pages a user has visited, as well as associated data such as page title and time of visit
+
+[x] User activity
+For example: network monitoring, clicks, mouse position, scroll, or keystroke logging
+
+[x] Website content
+For example: text, images, sounds, videos, or hyperlinks
+
+### I certify that the following disclosures are true:
+
+[x] I do not sell or transfer user data to third parties, outside of the approved use cases
+[x] I do not use or transfer user data for purposes that are unrelated to my item's single purpose
+[x] I do not use or transfer user data to determine creditworthiness or for lending purposes
+
+You must certify all three disclosures to comply with our Developer Program Policies
+
+## Privacy policy
+
+An extension must have a privacy policy if it collects user data. Learn more
+
+### Privacy policy URL
+
+```
+https://github.com/koedame/webextension-nanokvm-capture/blob/main/docs/PRIVACY_POLICY.md
+```

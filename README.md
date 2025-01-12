@@ -82,3 +82,28 @@ bun run build:prod
 ## License
 
 MIT License
+
+## Creating a ZIP file for Store Submission
+
+To create a ZIP file for submitting to the Chrome Web Store:
+
+1. Build the production version:
+```bash
+bun run build:prod
+```
+
+2. Create a ZIP file containing the following files and directories:
+```bash
+VERSION=$(node -p "require('./package.json').version")
+mkdir ./temp
+cd dist
+zip -r "../temp/nanokvm-capture-v${VERSION}.zip" ./*
+cd ..
+```
+
+This will create `nanokvm-capture-v{version}.zip` (e.g., `nanokvm-capture-v1.0.0.zip`) in the project root directory, which includes:
+- All contents of the `dist/` directory
+- `manifest.json`
+- `icons/` directory
+
+The generated ZIP file is ready to be submitted to the Chrome Web Store.
