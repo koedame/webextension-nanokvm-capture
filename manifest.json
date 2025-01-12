@@ -3,10 +3,20 @@
   "name": "NanoKVM Capture",
   "version": "1.0.0",
   "description": "Chrome extension for capturing NanoKVM interface",
+  "permissions": [
+    "scripting"
+  ],
+  "host_permissions": [
+    "http://*/*",
+    "https://*/*"
+  ],
   "content_scripts": [
     {
-      "matches": ["*://*/*"],
-      "js": ["content.js"]
+      "matches": [
+        "<all_urls>"
+      ],
+      "js": ["content.js"],
+      "run_at": "document_start"
     }
   ]
 } 
