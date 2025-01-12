@@ -9,11 +9,52 @@ A Chrome extension that allows you to capture screenshots and record videos of N
 - Save captured media locally
 - Easy-to-use interface integrated with Chrome browser
 
-## Installation
+## Development
 
-1. Download the extension from Chrome Web Store (link coming soon)
-2. Install it in your Chrome browser
-3. The extension icon will appear in your browser toolbar
+### Requirements
+
+- [Bun](https://bun.sh/) 1.0.0 or later
+- Chrome Browser
+
+### Setup
+
+1. Clone this repository
+```bash
+git clone https://github.com/koedame/webextension-nanokvm-capture.git
+cd webextension-nanokvm-capture
+```
+
+2. Install dependencies
+```bash
+bun install
+```
+
+### Development Mode
+
+Run the following command to start development mode with hot reload:
+```bash
+bun run dev
+```
+
+### Production Build
+
+To create a production build:
+```bash
+bun run build:prod
+```
+
+### Installing the Extension in Chrome
+
+1. Open Chrome and navigate to `chrome://extensions`
+2. Enable "Developer mode" in the top right corner
+3. Click "Load unpacked" and select the `dist` directory from this project
+4. The extension icon should appear in your browser toolbar
+
+### Development Tips
+
+- After making changes to the code, the extension will automatically rebuild
+- You may need to click the refresh button on the extension card in `chrome://extensions` to apply the changes
+- Check the browser console for any errors or logs
 
 ## License
 

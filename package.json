@@ -1,0 +1,17 @@
+{
+  "name": "webextension-nanokvm-capture",
+  "version": "1.0.0",
+  "description": "Chrome extension for capturing NanoKVM interface",
+  "scripts": {
+    "dev": "bun run scripts/watch.ts",
+    "build": "bun run scripts/build.ts",
+    "build:prod": "NODE_ENV=production bun run scripts/build.ts"
+  },
+  "devDependencies": {
+    "bun-types": "latest",
+    "typescript": "^5.0.0",
+    "@types/chrome": "^0.0.254",
+    "esbuild": "^0.24.2",
+    "chokidar": "^4.0.3"
+  }
+}
