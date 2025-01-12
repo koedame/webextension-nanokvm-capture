@@ -2,16 +2,29 @@
   "name": "webextension-nanokvm-capture",
   "version": "1.0.0",
   "description": "Chrome extension for capturing NanoKVM interface",
+  "type": "module",
   "scripts": {
     "dev": "bun run scripts/watch.ts",
     "build": "bun run scripts/build.ts",
-    "build:prod": "NODE_ENV=production bun run scripts/build.ts"
+    "build:prod": "NODE_ENV=production bun run scripts/build.ts",
+    "lint": "eslint \"src/**/*.ts\"",
+    "lint:fix": "eslint \"src/**/*.ts\" --fix",
+    "format": "prettier --write \"src/**/*.ts\"",
+    "type-check": "tsc --noEmit"
   },
   "devDependencies": {
-    "bun-types": "latest",
-    "typescript": "^5.0.0",
+    "@eslint/js": "^9.18.0",
     "@types/chrome": "^0.0.254",
+    "@typescript-eslint/eslint-plugin": "^8.19.1",
+    "@typescript-eslint/parser": "^8.19.1",
+    "bun-types": "latest",
+    "chokidar": "^4.0.3",
     "esbuild": "^0.24.2",
-    "chokidar": "^4.0.3"
+    "eslint": "^9.18.0",
+    "eslint-config-prettier": "^9.1.0",
+    "eslint-plugin-prettier": "^5.2.1",
+    "globals": "^15.14.0",
+    "prettier": "^3.4.2",
+    "typescript": "^5.0.0"
   }
 }

@@ -1,24 +1,46 @@
 # NanoKVM Capture - Chrome Extension
 
-A Chrome extension that allows you to capture screenshots and record videos of NanoKVM control interface.
+![NanoKVM Capture](./docs/screenshot.png)
+
+A Chrome extension that adds screenshot and video recording capabilities to NanoKVM.
 
 ## Features
 
-- Take screenshots of NanoKVM interface
-- Record video of NanoKVM interface
-- Save captured media locally
-- Easy-to-use interface integrated with Chrome browser
+- Screenshot Capture of NanoKVM Interface
+  - High-quality PNG image capture
+  - One-click saving
+  - Automatic timestamped filenames
+- Video Recording of NanoKVM Interface
+  - High-quality WebM recording with VP9 codec
+  - Start/stop recording at any time
+  - Real-time recording duration display
+  - Visual recording indicator
+- Local Storage of Captured Media
+  - Automatic saving with timestamped filenames
+  - PNG format for screenshots
+  - WebM format for videos
+- Easy-to-use Interface Integrated with Chrome Browser
+  - Simple and intuitive floating controls
+  - Visual feedback for recording status
 
-## Development
+## Technical Details
+
+- Video Format: WebM with VP9 codec
+- Image Format: PNG
+- Browser Support: Chrome with VP9 codec support
+- Interface Detection: Automatic detection of NanoKVM interface
+- Performance: Optimized for minimal resource usage
+
+## Development Setup
 
 ### Requirements
 
 - [Bun](https://bun.sh/) 1.0.0 or later
 - Chrome Browser
 
-### Setup
+### Setup Steps
 
-1. Clone this repository
+1. Clone the repository
 ```bash
 git clone https://github.com/koedame/webextension-nanokvm-capture.git
 cd webextension-nanokvm-capture
@@ -31,7 +53,7 @@ bun install
 
 ### Development Mode
 
-Run the following command to start development mode with hot reload:
+To start development mode with hot reload:
 ```bash
 bun run dev
 ```
@@ -52,10 +74,11 @@ bun run build:prod
 
 ### Development Tips
 
-- After making changes to the code, the extension will automatically rebuild
-- You may need to click the refresh button on the extension card in `chrome://extensions` to apply the changes
+- After making changes to the code, the extension will automatically rebuild in development mode
+- You may need to click the refresh button on the extension card in `chrome://extensions` to apply changes
 - Check the browser console for any errors or logs
+- The extension automatically detects the NanoKVM interface by checking for specific DOM elements
 
 ## License
 
-[License information to be added] 
+MIT License

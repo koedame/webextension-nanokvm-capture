@@ -1,0 +1,59 @@
+name: Build
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [18.x, 20.x]
+
+    steps:
+    - uses: actions/checkout@v4
+    
+    - name: Use Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v4
+      with:
+        node-version: ${{ matrix.node-version }}
+        cache: 'npm'
+    
+    - name: Setup Bun
+      uses: oven-sh/setup-bun@v1
+      with:
+        bun-version: latest
+
+    - name: Install dependencies
+      run: bun install
+    
+    - name: Build
+      run: bun run build:prod
+    
+    - name: Check build artifacts
+      run: |
+        if [ ! -d "dist" ]; then
+          echo "dist directory does not exist"
+          exit 1
+        fi
+        
+        if [ ! -f "dist/manifest.json" ]; then
+          echo "manifest.json is missing in dist"
+          exit 1
+        fi
+        
+        if [ ! -f "dist/content.js" ]; then
+          echo "content.js is missing in dist"
+          exit 1
+        fi
+    
+    - name: Upload build artifacts
+      uses: actions/upload-artifact@v4
+      with:
+        name: extension-build-${{ matrix.node-version }}
+        path: dist/
+        retention-days: 7 
