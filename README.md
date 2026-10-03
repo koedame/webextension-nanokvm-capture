@@ -4,6 +4,8 @@
 
 A Chrome extension that adds screenshot and video recording capabilities to NanoKVM.
 
+This is an unofficial extension made by an individual and is not affiliated with Sipeed. NanoKVM is a product name of Sipeed.
+
 ## Features
 
 - Screenshot Capture of NanoKVM Interface
@@ -81,7 +83,7 @@ bun run build:prod
 
 ## License
 
-MIT License
+MIT License. See [LICENSE](./LICENSE).
 
 ## Creating a ZIP file for Store Submission
 
