@@ -16,9 +16,6 @@ declare global {
   }
 }
 
-// Simple console.log to verify script execution
-console.log('Content script loaded');
-
 const EXTENSION_NAME = 'NanoKVM Capture';
 
 // Debug logging utility
@@ -37,20 +34,8 @@ let isInitialized = false;
 function checkConditionsAndInitialize() {
   if (isInitialized) return;
 
-  debugLog(`Current URL: ${window.location.href}`);
-  debugLog(`Current title: "${document.title}"`);
-
   const hasCorrectTitle = document.title === 'Remote Desktop - NanoKVM';
-  const videoElement = document.querySelector('video#screen') as HTMLVideoElement | null;
-  const hasVideoElement = videoElement !== null;
-
-  if (videoElement) {
-    debugLog('Found video element:');
-    debugLog(`- id: ${videoElement.id}`);
-    debugLog(`- src: ${videoElement.src || '(no src)'}`);
-  }
-
-  debugLog(`Conditions check: Title=${hasCorrectTitle}, Video=${hasVideoElement}`);
+  const hasVideoElement = document.querySelector('video#screen') !== null;
 
   if (hasCorrectTitle && hasVideoElement) {
     initializeExtension();
@@ -240,32 +225,6 @@ function initVideoRecorder() {
   debugLog('Video recorder UI initialized');
 }
 
-function startObserving() {
-  debugLog('Starting observation...');
-  debugLog(`Document readyState: ${document.readyState}`);
-
-  // Set up mutation observer for DOM changes
-  const observer = new MutationObserver((mutations) => {
-    if (isInitialized) {
-      debugLog('Already initialized, disconnecting observer');
-      observer.disconnect();
-      return;
-    }
-
-    checkConditionsAndInitialize();
-  });
-
-  // Start observing document changes
-  observer.observe(document.documentElement, {
-    childList: true,
-    subtree: true,
-    characterData: true,
-  });
-
-  // Initial check for conditions
-  checkConditionsAndInitialize();
-}
-
 function initializeExtension() {
   if (isInitialized) return;
 
@@ -279,23 +238,25 @@ function initializeExtension() {
 
 // Main entry point
 function main() {
-  debugLog(`Extension loaded at ${window.location.href}`);
-  debugLog('Starting observation...');
+  checkConditionsAndInitialize();
+  if (isInitialized) return;
 
-  let checkCount = 0;
-  const maxChecks = 60; // 1分間（1秒 × 60回）
-
-  const checkInterval = setInterval(() => {
-    checkCount++;
-    startObserving();
-
-    if (isInitialized || checkCount >= maxChecks) {
-      clearInterval(checkInterval);
-      if (!isInitialized && checkCount >= maxChecks) {
-        debugLog('Initialization timed out after 1 minute');
-      }
+  const observer = new MutationObserver(() => {
+    checkConditionsAndInitialize();
+    if (isInitialized) {
+      observer.disconnect();
+      clearTimeout(giveUpTimer);
     }
-  }, 1000);
+  });
+
+  observer.observe(document, {
+    childList: true,
+    subtree: true,
+    characterData: true,
+  });
+
+  // NanoKVM 以外のページで observer を残さないよう、1 分で諦める
+  const giveUpTimer = setTimeout(() => observer.disconnect(), 60 * 1000);
 }
 
 // Start script execution with error handling

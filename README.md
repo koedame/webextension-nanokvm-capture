@@ -31,7 +31,7 @@ This is an unofficial extension made by an individual and is not affiliated with
 - Image Format: PNG
 - Browser Support: Chrome with VP9 codec support
 - Interface Detection: Automatic detection of NanoKVM interface
-- Performance: Optimized for minimal resource usage
+- Performance: On pages other than NanoKVM, it watches for changes for up to 1 minute and then stops
 
 ## Development Setup
 
