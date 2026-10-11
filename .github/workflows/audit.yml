@@ -1,0 +1,43 @@
+name: Audit
+
+# Dependencies are checked against the npm advisory database. A new advisory
+# can appear without any change to this repository, so besides pull requests
+# that touch the lock file and pushes, this runs every week; a failing scheduled
+# run is how a freshly published advisory reaches us.
+#
+# This checks the lock file itself. Dependabot alerts only cover what GitHub's
+# dependency graph picked up, so zero alerts is not proof of zero advisories.
+
+on:
+  pull_request:
+    paths:
+      - "bun.lockb"
+      - "package.json"
+      - ".github/workflows/audit.yml"
+  push:
+    branches: [main]
+  schedule:
+    - cron: "41 3 * * 1"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  bun-audit:
+    name: bun advisories
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+
+      - uses: oven-sh/setup-bun@0c5077e51419868618aeaa5fe8019c62421857d6 # v2.2.0
+
+      # Everything, including dev dependencies: they run on the machines of
+      # whoever builds this extension.
+      #
+      # GHSA-vfj7-8cjw-p6xm (braces, via eslint's glob matching): 3.0.3 is the
+      # latest release and no fixed version is published. It is only reached
+      # from the lint toolchain, never from the built extension.
+      - name: Audit all dependencies
+        run: bun audit --audit-level=high --ignore GHSA-vfj7-8cjw-p6xm
