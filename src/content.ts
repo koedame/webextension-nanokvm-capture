@@ -16,6 +16,19 @@ declare global {
   }
 }
 
+// NanoKVM の画面は、映像の方式により video / canvas / img のどれかになる (id は常に screen)
+type ScreenElement = HTMLVideoElement | HTMLCanvasElement | HTMLImageElement;
+
+function getScreenElement(): ScreenElement | null {
+  return document.getElementById('screen') as ScreenElement | null;
+}
+
+function getScreenSize(el: ScreenElement): { width: number; height: number } {
+  if (el instanceof HTMLVideoElement) return { width: el.videoWidth, height: el.videoHeight };
+  if (el instanceof HTMLImageElement) return { width: el.naturalWidth, height: el.naturalHeight };
+  return { width: el.width, height: el.height };
+}
+
 const EXTENSION_NAME = 'NanoKVM Capture';
 
 // Debug logging utility
@@ -34,12 +47,16 @@ let isInitialized = false;
 function checkConditionsAndInitialize() {
   if (isInitialized) return;
 
-  const hasCorrectTitle = document.title === 'Remote Desktop - NanoKVM';
-  const hasVideoElement = document.querySelector('video#screen') !== null;
-
-  if (hasCorrectTitle && hasVideoElement) {
+  if (isNanoKvmConsole() && document.getElementById('screen') !== null) {
     initializeExtension();
   }
+}
+
+// NanoKVM の画面かどうか。タイトルは設定で変えられるので、
+// 画面に付くアイコン (sipeed.ico) を主な手がかりにし、初期のタイトルも受け付ける
+function isNanoKvmConsole(): boolean {
+  if (document.querySelector('link[rel~="icon"][href$="sipeed.ico"]') !== null) return true;
+  return document.title === 'Remote Desktop - NanoKVM';
 }
 
 // Initialize video recorder functionality
@@ -52,19 +69,8 @@ function initVideoRecorder() {
   const snapshotButton = createSnapshotButton();
   const indicator = createRecordingIndicator();
 
-  // Find the video container
-  const videoContainer = document.querySelector(
-    '.flex.h-screen.w-screen.items-start.justify-center'
-  );
-  if (!videoContainer) {
-    debugLog('Video container not found');
-    return;
-  }
-
-  // Make video container relative for absolute positioning
-  videoContainer.classList.add('relative');
-
-  // Add UI elements to the container
+  // ファームウェアの版で画面のレイアウトが変わるので、ボタンは body に固定表示で置く
+  const videoContainer = document.body;
   videoContainer.appendChild(indicator);
   videoContainer.appendChild(recordButton);
   videoContainer.appendChild(snapshotButton);
@@ -92,8 +98,9 @@ function initVideoRecorder() {
   // Start recording
   async function startRecording() {
     try {
-      const videoElement = document.getElementById('screen') as HTMLVideoElement;
+      const videoElement = getScreenElement();
       if (!videoElement) throw new Error(t.error.noVideo);
+      if (!('captureStream' in videoElement)) throw new Error(t.error.browserNotSupported);
 
       if (!MediaRecorder.isTypeSupported('video/webm;codecs=vp9')) {
         throw new Error(t.error.browserNotSupported);
@@ -170,7 +177,7 @@ function initVideoRecorder() {
 
   // Take snapshot
   async function takeSnapshot() {
-    const videoElement = document.getElementById('screen') as HTMLVideoElement;
+    const videoElement = getScreenElement();
     if (!videoElement) {
       showNotification(t.error.noVideo, 'error');
       return;
@@ -179,8 +186,9 @@ function initVideoRecorder() {
     try {
       // Create canvas with video dimensions
       const canvas = document.createElement('canvas');
-      canvas.width = videoElement.videoWidth;
-      canvas.height = videoElement.videoHeight;
+      const size = getScreenSize(videoElement);
+      canvas.width = size.width;
+      canvas.height = size.height;
 
       // Draw video frame to canvas
       const ctx = canvas.getContext('2d');

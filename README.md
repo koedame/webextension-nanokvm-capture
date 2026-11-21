@@ -30,7 +30,7 @@ This is an unofficial extension made by an individual and is not affiliated with
 - Video Format: WebM with VP9 codec
 - Image Format: PNG
 - Browser Support: Chrome with VP9 codec support
-- Interface Detection: Automatic detection of NanoKVM interface
+- Interface Detection: Automatic detection of the NanoKVM interface by its icon (`sipeed.ico`) and the `#screen` element, so a custom page title set in NanoKVM settings works too
 - Performance: On pages other than NanoKVM, it watches for changes for up to 1 minute and then stops
 
 ## Development Setup
