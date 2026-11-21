@@ -7,7 +7,7 @@ const commonStyles = `
 export function createRecordButton(): HTMLDivElement {
   const button = document.createElement('div');
   button.style.cssText = `
-    position: absolute;
+    position: fixed;
     bottom: 16px;
     right: 64px;
     width: 40px;
@@ -38,7 +38,7 @@ export function createRecordButton(): HTMLDivElement {
 export function createSnapshotButton(): HTMLDivElement {
   const button = document.createElement('div');
   button.style.cssText = `
-    position: absolute;
+    position: fixed;
     bottom: 16px;
     right: 16px;
     width: 40px;
@@ -75,7 +75,7 @@ export function createSnapshotButton(): HTMLDivElement {
 export function createRecordingIndicator(): HTMLDivElement {
   const indicator = document.createElement('div');
   indicator.style.cssText = `
-    position: absolute;
+    position: fixed;
     bottom: 16px;
     right: 112px;
     padding: 8px 12px;
@@ -99,7 +99,7 @@ export function createNotification(
   const bgColor =
     type === 'error' ? '#ef4444' : type === 'success' ? '#22c55e' : 'rgba(38, 38, 38, 0.9)';
   notification.style.cssText = `
-    position: absolute;
+    position: fixed;
     bottom: 64px;
     right: 16px;
     padding: 8px 16px;
