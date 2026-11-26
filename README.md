@@ -1,100 +1,76 @@
-# NanoKVM Capture - Chrome Extension
+<div align="center">
 
-![NanoKVM Capture](./docs/screenshot.png)
+<img alt="NanoKVM Capture icon: a white camera on a blue square" src="icons/icon128.png" width="96" height="96">
 
-A Chrome extension that adds screenshot and video recording capabilities to NanoKVM.
+# NanoKVM Capture
 
-This is an unofficial extension made by an individual and is not affiliated with Sipeed. NanoKVM is a product name of Sipeed.
+**Screenshots and video recording for the NanoKVM remote desktop, right in Chrome.**
 
-## Features
+[![Build](https://github.com/koedame/webextension-nanokvm-capture/actions/workflows/build.yml/badge.svg)](https://github.com/koedame/webextension-nanokvm-capture/actions/workflows/build.yml)
+[![Chrome Web Store](https://img.shields.io/badge/Chrome%20Web%20Store-install-1a73e8?logo=googlechrome&logoColor=white)](https://chromewebstore.google.com/detail/hhhflijfhlnddhneehnhojkpbjengbfh)
+![Manifest V3](https://img.shields.io/badge/manifest-V3-1a73e8)
+![License: MIT](https://img.shields.io/badge/license-MIT-1a73e8)
 
-- Screenshot Capture of NanoKVM Interface
-  - High-quality PNG image capture
-  - One-click saving
-  - Automatic timestamped filenames
-- Video Recording of NanoKVM Interface
-  - High-quality WebM recording with VP9 codec
-  - Start/stop recording at any time
-  - Real-time recording duration display
-  - Visual recording indicator
-- Local Storage of Captured Media
-  - Automatic saving with timestamped filenames
-  - PNG format for screenshots
-  - WebM format for videos
-- Easy-to-use Interface Integrated with Chrome Browser
-  - Simple and intuitive floating controls
-  - Visual feedback for recording status
+[Quick start](#quick-start) · [Usage](#usage) · [Privacy](#privacy) · [Development](#development) · [Disclaimer](#disclaimer)
 
-## Technical Details
+</div>
 
-- Video Format: WebM with VP9 codec
-- Image Format: PNG
-- Browser Support: Chrome with VP9 codec support
-- Interface Detection: Automatic detection of the NanoKVM interface by its icon (`sipeed.ico`) and the `#screen` element, so a custom page title set in NanoKVM settings works too
-- Performance: On pages other than NanoKVM, it watches for changes for up to 1 minute and then stops
+Open your NanoKVM in Chrome and two round buttons appear at the bottom right of the remote desktop: one saves the current screen as a PNG, the other records it as a WebM video. Files go straight to your Downloads folder with a timestamp in the name, so documenting a BIOS setup or an OS install takes one click.
 
-## Development Setup
+## Highlights
 
-### Requirements
+- **Two buttons, no setup.** Screenshot and record controls show up by themselves on the NanoKVM page and nowhere else.
+- **PNG and WebM (VP9).** Screenshots are PNG; recordings are WebM with the VP9 codec, with a live duration counter while recording.
+- **Saved locally.** Every file is named `snapshot-<timestamp>.png` or `recorded-video-<timestamp>.webm` and downloaded through Chrome.
+- **0 network requests.** The extension has no server, no analytics and no storage. See [Privacy](#privacy).
+- **Works with renamed consoles.** The NanoKVM page is recognized by its `sipeed.ico` icon and the `#screen` element, so a custom page title does not break it.
 
-- [Bun](https://bun.sh/) 1.0.0 or later
-- Chrome Browser
+## Quick start
 
-### Setup Steps
+Requires Chrome with VP9 recording support and a NanoKVM.
 
-1. Clone the repository
+1. Install **NanoKVM Capture** from the [Chrome Web Store](https://chromewebstore.google.com/detail/hhhflijfhlnddhneehnhojkpbjengbfh).
+2. Open your NanoKVM's web page in Chrome and sign in as usual.
+3. Use the buttons at the bottom right of the screen.
+
+## Usage
+
+| Button | What it does |
+|---|---|
+| Camera | Saves the current screen as `snapshot-<timestamp>.png`. |
+| Video camera | Starts recording. Press again to stop and save `recorded-video-<timestamp>.webm`. A recording indicator with the elapsed time is shown while it runs. |
+
+On any page that is not a NanoKVM console the extension shows nothing and does not read the page. It keeps watching for the NanoKVM screen for up to 1 minute after the page loads, then stops.
+
+## Privacy
+
+NanoKVM Capture does not collect, transmit or store anything. Screenshots and recordings are created in your browser and saved as ordinary downloads. The full text is in the [privacy policy](docs/PRIVACY_POLICY.md); the answers given to the Chrome Web Store are in [docs/STORE_LISTING.md](docs/STORE_LISTING.md). To report a vulnerability, see [SECURITY.md](SECURITY.md).
+
+## Development
+
+<details>
+<summary>Build it yourself, load it unpacked, package it for the store</summary>
+
+Requirements: [Bun](https://bun.sh/) 1.0.0 or later and Chrome.
+
 ```bash
 git clone https://github.com/koedame/webextension-nanokvm-capture.git
 cd webextension-nanokvm-capture
-```
-
-2. Install dependencies
-```bash
 bun install
+bun run dev          # development build that rebuilds on change
+bun run build:prod   # production build into dist/
 ```
 
-### Development Mode
+Load the build in Chrome:
 
-To start development mode with hot reload:
-```bash
-bun run dev
-```
+1. Open `chrome://extensions` and turn on **Developer mode** (top right).
+2. Click **Load unpacked** and select the `dist` directory of this project.
+3. The extension icon appears in the toolbar. After a rebuild, press the refresh button on the extension card.
 
-### Production Build
+Checks used by CI: `bun run lint` and `bun run type-check`.
 
-To create a production build:
-```bash
-bun run build:prod
-```
+To make the ZIP that is uploaded to the Chrome Web Store, run the production build and then:
 
-### Installing the Extension in Chrome
-
-1. Open Chrome and navigate to `chrome://extensions`
-2. Enable "Developer mode" in the top right corner
-3. Click "Load unpacked" and select the `dist` directory from this project
-4. The extension icon should appear in your browser toolbar
-
-### Development Tips
-
-- After making changes to the code, the extension will automatically rebuild in development mode
-- You may need to click the refresh button on the extension card in `chrome://extensions` to apply changes
-- Check the browser console for any errors or logs
-- The extension automatically detects the NanoKVM interface by checking for specific DOM elements
-
-## License
-
-MIT License. See [LICENSE](./LICENSE).
-
-## Creating a ZIP file for Store Submission
-
-To create a ZIP file for submitting to the Chrome Web Store:
-
-1. Build the production version:
-```bash
-bun run build:prod
-```
-
-2. Create a ZIP file containing the following files and directories:
 ```bash
 VERSION=$(node -p "require('./package.json').version")
 mkdir ./temp
@@ -103,9 +79,12 @@ zip -r "../temp/nanokvm-capture-v${VERSION}.zip" ./*
 cd ..
 ```
 
-This will create `nanokvm-capture-v{version}.zip` (e.g., `nanokvm-capture-v1.0.0.zip`) in the project root directory, which includes:
-- All contents of the `dist/` directory
-- `manifest.json`
-- `icons/` directory
+</details>
 
-The generated ZIP file is ready to be submitted to the Chrome Web Store.
+## Disclaimer
+
+This is an unofficial extension made by an individual. It is not affiliated with, endorsed by, or supported by Sipeed. NanoKVM is a product name of Sipeed, and Chrome is a trademark of Google LLC; all other names belong to their respective owners and are used only to say what the extension works with.
+
+## License
+
+MIT License. See [LICENSE](./LICENSE).
