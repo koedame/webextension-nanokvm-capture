@@ -1,6 +1,6 @@
 {
   "name": "webextension-nanokvm-capture",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "license": "MIT",
   "description": "A Chrome extension that adds screenshot and video recording capabilities to NanoKVM.",
   "type": "module",

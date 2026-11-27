@@ -249,11 +249,19 @@ function main() {
   checkConditionsAndInitialize();
   if (isInitialized) return;
 
+  let giveUpTimer: number | undefined;
+
   const observer = new MutationObserver(() => {
     checkConditionsAndInitialize();
     if (isInitialized) {
       observer.disconnect();
       clearTimeout(giveUpTimer);
+      return;
+    }
+    // NanoKVM の画面だとわかったら、ログインに何分かかっても #screen が出るまで待つ
+    if (giveUpTimer !== undefined && isNanoKvmConsole()) {
+      clearTimeout(giveUpTimer);
+      giveUpTimer = undefined;
     }
   });
 
@@ -264,7 +272,9 @@ function main() {
   });
 
   // NanoKVM 以外のページで observer を残さないよう、1 分で諦める
-  const giveUpTimer = setTimeout(() => observer.disconnect(), 60 * 1000);
+  if (!isNanoKvmConsole()) {
+    giveUpTimer = window.setTimeout(() => observer.disconnect(), 60 * 1000);
+  }
 }
 
 // Start script execution with error handling
