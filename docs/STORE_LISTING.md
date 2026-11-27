@@ -20,12 +20,6 @@ NanoKVM Capture is a Chrome extension designed specifically to enhance NanoKVM's
 A permission is either one of a list of known strings, such as "activeTab", or a match pattern giving access to one or more hosts.
 Remove any permission that is not needed to fulfill the single purpose of your extension. Requesting an unnecessary permission will result in this version being rejected.
 
-### scripting justification
-
-```
-The scripting permission is essential for implementing screenshot and video recording capabilities. This permission is required to execute JavaScript on web pages to enable the capture functionality.
-```
-
 ### Host permission justification
 
 ```
