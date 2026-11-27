@@ -1,6 +1,6 @@
 # Privacy Policy for NanoKVM Capture
 
-Last updated: October 3, 2026
+Last updated: November 28, 2026
 
 NanoKVM Capture is a Chrome extension that adds screenshot and video recording to the NanoKVM remote desktop page. It is an unofficial extension made by an individual and is not affiliated with Sipeed.
 
@@ -12,7 +12,7 @@ NanoKVM Capture does not collect, transmit, or store any data about you. It has 
 
 - **Screen content.** When you press the screenshot or record button, the extension reads the video of the NanoKVM remote desktop in the page you are viewing and turns it into a PNG image or a WebM video. This happens entirely inside your browser on your device.
 - **Where the result goes.** The image or video is saved to your device as a downloaded file, using your browser's normal download behavior. The extension keeps no copy and does not send the file anywhere.
-- **Page detection.** The extension's content script is loaded on web pages so that it can recognize the NanoKVM remote desktop page (by its page title and the presence of its video element). On any other page it does nothing: it does not read page content, and it shows no controls. The page title and URL are checked in memory only and are never recorded or sent.
+- **Page detection.** The extension's content script is loaded on web pages so that it can recognize the NanoKVM remote desktop page (by the NanoKVM icon or page title, and the presence of its `#screen` element). On any other page it does nothing: it does not read page content, and it shows no controls. These checks happen in memory only; nothing is recorded or sent.
 - **Settings and history.** The extension does not use browser storage (`chrome.storage`, `localStorage`, cookies, or similar) and keeps no settings or history.
 
 ## What the extension does not do

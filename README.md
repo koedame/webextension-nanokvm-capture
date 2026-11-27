@@ -40,7 +40,7 @@ Requires Chrome with VP9 recording support and a NanoKVM.
 | Camera | Saves the current screen as `snapshot-<timestamp>.png`. |
 | Video camera | Starts recording. Press again to stop and save `recorded-video-<timestamp>.webm`. A recording indicator with the elapsed time is shown while it runs. |
 
-On any page that is not a NanoKVM console the extension shows nothing and does not read the page. It keeps watching for the NanoKVM screen for up to 1 minute after the page loads, then stops.
+On any page that is not a NanoKVM console the extension shows nothing and does not read the page. It keeps watching for the NanoKVM screen for up to 1 minute after the page loads, then stops. On a NanoKVM page it keeps watching until the screen appears, so the buttons also show up after a slow login.
 
 ## Privacy
 
