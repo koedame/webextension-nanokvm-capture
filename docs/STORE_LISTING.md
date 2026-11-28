@@ -23,7 +23,7 @@ Remove any permission that is not needed to fulfill the single purpose of your e
 ### Host permission justification
 
 ```
-Host permissions are required to access the NanoKVM control interface. This permission is necessary to enable capture functionality on the NanoKVM web interface.
+The content script is matched against all http and https pages because a NanoKVM can be reached at any address on the user's network. The script does nothing unless the page is a NanoKVM web interface. No separate host permissions are requested.
 ```
 
 ### Are you using remote code?
