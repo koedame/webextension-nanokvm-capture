@@ -85,6 +85,10 @@ cd ..
 
 This is an unofficial extension made by an individual. It is not affiliated with, endorsed by, or supported by Sipeed. NanoKVM is a product name of Sipeed, and Chrome is a trademark of Google LLC; all other names belong to their respective owners and are used only to say what the extension works with.
 
+## Contributing
+
+This repository does not accept outside contributions: pull requests are not reviewed or merged and may be closed without a reply. Bug reports and questions are welcome as [issues](https://github.com/koedame/webextension-nanokvm-capture/issues), without any promise of an answer. See [CONTRIBUTING.md](CONTRIBUTING.md) for details.
+
 ## License
 
 MIT License. See [LICENSE](./LICENSE).
